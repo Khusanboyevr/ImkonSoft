@@ -3,14 +3,14 @@
 import { Typography } from "@material-tailwind/react";
 
 const CLIENTS = [
-  { name: "Najot Ta'lim", field: "IT ta'lim markazi" },
-  { name: "PDP Education", field: "Dasturlash maktabi" },
-  { name: "Mohirdev", field: "IT jamoa va platforma" },
-  { name: "Astrum IT", field: "IT o'quv markazi" },
-  { name: "Click Uzbekistan", field: "To'lov tizimlari" },
-  { name: "Payme", field: "Fintech kompaniya" },
-  { name: "Humans.uz", field: "Telekommunikatsiya" },
-  { name: "UzCard", field: "Plastik karta tizimi" },
+  { name: "Najot Ta'lim", field: "IT ta'lim markazi", logo: "https://www.google.com/s2/favicons?domain=najottalim.uz&sz=128" },
+  { name: "PDP Education", field: "Dasturlash maktabi", logo: "https://www.google.com/s2/favicons?domain=pdp.uz&sz=128" },
+  { name: "Mohirdev", field: "IT jamoa va platforma", logo: "https://www.google.com/s2/favicons?domain=mohirdev.uz&sz=128" },
+  { name: "Astrum IT", field: "IT o'quv markazi", logo: "https://www.google.com/s2/favicons?domain=astrum.uz&sz=128" },
+  { name: "Click Uzbekistan", field: "To'lov tizimlari", logo: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://click.uz&size=128" },
+  { name: "Payme", field: "Fintech kompaniya", logo: "https://www.google.com/s2/favicons?domain=payme.uz&sz=128" },
+  { name: "Humans.uz", field: "Telekommunikatsiya", logo: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://humans.uz&size=128" },
+  { name: "UzCard", field: "Plastik karta tizimi", logo: "https://www.google.com/s2/favicons?domain=uzcard.uz&sz=128" },
 ];
 
 export function OurClients() {
@@ -33,14 +33,9 @@ export function OurClients() {
               key={idx}
               className="group relative flex flex-col items-center justify-center rounded-2xl p-6 border border-blue-100 bg-white shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
-              {/* Logo placeholder with initials */}
-              <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center mb-3 text-white font-extrabold text-lg shadow"
-                style={{
-                  background: `linear-gradient(135deg, hsl(${(idx * 47) % 360}, 70%, 45%), hsl(${(idx * 47 + 60) % 360}, 70%, 55%))`,
-                }}
-              >
-                {client.name.slice(0, 2).toUpperCase()}
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-3 bg-white shadow overflow-hidden border border-gray-100 p-1.5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={client.logo} alt={`${client.name} logo`} className="w-full h-full object-contain" />
               </div>
               <Typography variant="h6" color="blue-gray" className="text-center font-semibold text-sm">
                 {client.name}
