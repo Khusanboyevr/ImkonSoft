@@ -35,7 +35,7 @@ export function AboutEvent() {
 
   return (
     <section className="container mx-auto flex flex-col items-center px-4 py-10">
-      <Typography variant="h6" className="text-center mb-2 tracking-widest uppercase text-sm opacity-60" color="orange">
+      <Typography variant="h6" className="text-center mb-2 tracking-widest uppercase text-sm opacity-60" color="amber">
         {t.about.tag}
       </Typography>
       <Typography variant="h3" className="text-center" color="blue-gray">
