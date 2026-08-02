@@ -11,7 +11,7 @@ function Hero() {
   return (
     <div
       id="hero"
-      className="relative min-h-screen w-full overflow-hidden pt-20"
+      className="relative min-h-screen w-full overflow-hidden pt-28 md:pt-20"
       style={{
         background:
           "linear-gradient(135deg, #0a0f2c 0%, #0d1f5c 25%, #0e3a6e 50%, #0a5c7a 75%, #076b72 100%)",
@@ -52,7 +52,7 @@ function Hero() {
       />
 
       {/* Main content */}
-      <div className="grid min-h-[85vh] px-8 relative z-10">
+      <div className="grid min-h-[85vh] px-8 relative z-10 py-12 md:py-0">
         <div className="container my-auto mx-auto grid place-items-center text-center">
           <Image
             src="/image/logo.png?v=3"
@@ -71,7 +71,7 @@ function Hero() {
           <Typography
             variant="h1"
             color="white"
-            className="lg:max-w-4xl font-extrabold tracking-tight mt-2"
+            className="lg:max-w-4xl font-extrabold tracking-tight mt-2 !text-4xl sm:!text-5xl lg:!text-6xl !leading-tight"
             style={{ textShadow: "0 0 40px rgba(59,130,246,0.5)" }}
           >
             {t.hero.title}{" "}
@@ -86,7 +86,7 @@ function Hero() {
           </Typography>
 
           {/* ANIMATED BUTTONS SECTION */}
-          <div className="flex items-center gap-6 flex-wrap justify-center">
+          <div className="flex flex-col sm:flex-row items-center gap-6 justify-center mt-2">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full blur-md opacity-75 group-hover:opacity-100 transition duration-500 group-hover:scale-105 btn-pulse-glow" />
               

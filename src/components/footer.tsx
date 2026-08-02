@@ -2,7 +2,6 @@ import { Typography, Button, IconButton } from "@material-tailwind/react";
 import Image from "next/image";
 
 const CURRENT_YEAR = new Date().getFullYear();
-const LINKS = ["Company", "About Us", "Team", "Products", "Blog"];
 
 // Simple inline SVG icons for social media (since @heroicons doesn't include brand icons)
 function TelegramIcon({ className }: { className?: string }) {
@@ -32,7 +31,7 @@ function LinkedInIcon({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="pb-5 p-10 md:pt-10">
+    <footer className="px-8 pb-5 pt-16 md:pt-20">
       <div className="container flex flex-col mx-auto">
         <div className="flex !w-full py-10 mb-5 md:mb-20 flex-col justify-center !items-center bg-gray-900 max-w-6xl mx-auto rounded-2xl p-5 ">
           <Typography
@@ -77,22 +76,7 @@ export function Footer() {
               ImkonSoft
             </Typography>
           </div>
-          <ul className="flex justify-center my-4 md:my-0 w-max mx-auto items-center gap-4">
-            {LINKS.map((link, index) => (
-              <li key={index}>
-                <Typography
-                  as="a"
-                  href="#"
-                  variant="small"
-                  color="white"
-                  className="font-normal !text-gray-700 hover:!text-gray-900 transition-colors"
-                >
-                  {link}
-                </Typography>
-              </li>
-            ))}
-          </ul>
-          <div className="flex w-fit justify-center gap-2">
+          <div className="flex w-fit justify-center gap-2 mt-4 md:mt-0">
             <a href="https://t.me/imkonsoft" target="_blank" rel="noopener noreferrer">
               <IconButton size="sm" color="gray" variant="text">
                 <TelegramIcon className="h-5 w-5" />
@@ -116,7 +100,6 @@ export function Footer() {
         >
           &copy; {CURRENT_YEAR} ImkonSoft. Barcha huquqlar himoyalangan.
         </Typography>
-        <p className="text-center font-normal !text-gray-700">Distributed by{" "} <a className="text-green-700 font-semibold" href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
       </div>
     </footer>
   );

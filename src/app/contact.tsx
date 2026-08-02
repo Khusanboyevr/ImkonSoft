@@ -107,7 +107,7 @@ export function Contact() {
               {/* Social Links */}
               <div className="mt-8 pt-6 border-t border-white/10">
                 <Typography variant="small" className="opacity-60 mb-3">Ijtimoiy tarmoqlar</Typography>
-                <div className="flex gap-3">
+                <div className="flex gap-3 flex-wrap">
                   {["Telegram", "Instagram", "LinkedIn"].map((s) => (
                     <a
                       key={s}
