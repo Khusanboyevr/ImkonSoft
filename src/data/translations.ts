@@ -12,7 +12,7 @@ export const translations = {
       contact: "Aloqa",
     },
     hero: {
-      badge: "🔥 Raqamli Yechimlar Markazi",
+      badge: "Raqamli Yechimlar Markazi",
       title: "Biznesingizni Zamonaviy Dasturlar Bilan",
       titleHighlight: "Rivojlantiring",
       description: "ImkonSoft — veb-saytlar, mobil ilovalar va CRM tizimlarini yaratish orqali biznesingizni avtomatlashtirishga ko'maklashadi.",
@@ -150,7 +150,7 @@ export const translations = {
       contact: "Контакты",
     },
     hero: {
-      badge: "🔥 Центр Цифровых Решений",
+      badge: "Центр Цифровых Решений",
       title: "Развивайте Свой Бизнес С Современными",
       titleHighlight: "Программами",
       description: "ImkonSoft помогает автоматизировать ваш бизнес путем создания веб-сайтов, мобильных приложений и CRM-систем.",

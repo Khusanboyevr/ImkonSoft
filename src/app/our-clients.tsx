@@ -3,14 +3,14 @@
 import { Typography } from "@material-tailwind/react";
 
 const CLIENTS = [
-  { name: "Najot Ta'lim", field: "IT ta'lim markazi", logo: "https://www.google.com/s2/favicons?domain=najottalim.uz&sz=128" },
-  { name: "PDP Education", field: "Dasturlash maktabi", logo: "https://www.google.com/s2/favicons?domain=pdp.uz&sz=128" },
-  { name: "Mohirdev", field: "IT jamoa va platforma", logo: "https://www.google.com/s2/favicons?domain=mohirdev.uz&sz=128" },
-  { name: "Astrum IT", field: "IT o'quv markazi", logo: "https://www.google.com/s2/favicons?domain=astrum.uz&sz=128" },
-  { name: "Click Uzbekistan", field: "To'lov tizimlari", logo: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://click.uz&size=128" },
-  { name: "Payme", field: "Fintech kompaniya", logo: "https://www.google.com/s2/favicons?domain=payme.uz&sz=128" },
-  { name: "Humans.uz", field: "Telekommunikatsiya", logo: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://humans.uz&size=128" },
-  { name: "UzCard", field: "Plastik karta tizimi", logo: "https://www.google.com/s2/favicons?domain=uzcard.uz&sz=128" },
+  { name: "Najot Ta'lim", field: "IT ta'lim markazi", logo: "https://icon.horse/icon/najottalim.uz" },
+  { name: "PDP Education", field: "Dasturlash maktabi", logo: "https://icon.horse/icon/pdp.uz" },
+  { name: "Mohirdev", field: "IT jamoa va platforma", logo: "https://icon.horse/icon/mohirdev.uz" },
+  { name: "Astrum IT", field: "IT o'quv markazi", logo: "https://icon.horse/icon/astrum.uz" },
+  { name: "Click Uzbekistan", field: "To'lov tizimlari", logo: "https://icon.horse/icon/click.uz" },
+  { name: "Payme", field: "Fintech kompaniya", logo: "https://icon.horse/icon/payme.uz" },
+  { name: "Humans.uz", field: "Telekommunikatsiya", logo: "https://icon.horse/icon/humans.uz" },
+  { name: "UzCard", field: "Plastik karta tizimi", logo: "https://icon.horse/icon/uzcard.uz" },
 ];
 
 export function OurClients() {
