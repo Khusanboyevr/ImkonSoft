@@ -3,14 +3,14 @@
 import { Typography } from "@material-tailwind/react";
 
 const CLIENTS = [
-  { name: "Najot Ta'lim", field: "IT ta'lim markazi", logo: "https://icon.horse/icon/najottalim.uz" },
-  { name: "PDP Education", field: "Dasturlash maktabi", logo: "https://icon.horse/icon/pdp.uz" },
-  { name: "Mohirdev", field: "IT jamoa va platforma", logo: "https://icon.horse/icon/mohirdev.uz" },
-  { name: "Astrum IT", field: "IT o'quv markazi", logo: "https://icon.horse/icon/astrum.uz" },
-  { name: "Click Uzbekistan", field: "To'lov tizimlari", logo: "https://icon.horse/icon/click.uz" },
-  { name: "Payme", field: "Fintech kompaniya", logo: "https://icon.horse/icon/payme.uz" },
-  { name: "Humans.uz", field: "Telekommunikatsiya", logo: "https://icon.horse/icon/humans.uz" },
-  { name: "UzCard", field: "Plastik karta tizimi", logo: "https://icon.horse/icon/uzcard.uz" },
+  { name: "Najot Ta'ilim", field: "IT ta'lim markazi" },
+  { name: "PDP Education", field: "Dasturlash maktabi" },
+  { name: "Mohirdev", field: "IT jamoa va platforma" },
+  { name: "Astrum IT", field: "IT o'quv markazi" },
+  { name: "Click Uzbekistan", field: "To'lov tizimlari" },
+  { name: "Payme", field: "Fintech kompaniya" },
+  { name: "Humans.uz", field: "Telekommunikatsiya" },
+  { name: "UzCard", field: "Plastik karta tizimi" },
 ];
 
 export function OurClients() {
@@ -33,10 +33,6 @@ export function OurClients() {
               key={idx}
               className="group relative flex flex-col items-center justify-center rounded-2xl p-6 border border-blue-100 bg-white shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-3 bg-white shadow overflow-hidden border border-gray-100 p-1.5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={client.logo} alt={`${client.name} logo`} className="w-full h-full object-contain" />
-              </div>
               <Typography variant="h6" color="blue-gray" className="text-center font-semibold text-sm">
                 {client.name}
               </Typography>
