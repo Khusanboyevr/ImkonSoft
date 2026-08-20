@@ -13,9 +13,9 @@ export const translations = {
     },
     hero: {
       badge: "Raqamli Yechimlar Markazi",
-      title: "Biznesingizni Zamonaviy Dasturlar Bilan",
+      title: "Biznesingizni Zamonaviy Yechimlar Bilan",
       titleHighlight: "Rivojlantiring",
-      description: "ImkonSoft — veb-saytlar, mobil ilovalar va CRM tizimlarini yaratish orqali biznesingizni avtomatlashtirishga ko'maklashadi.",
+      description: "ImkonSoft — veb-saytlar, mobil ilovalar, CRM tizimlari va SMM xizmatlari orqali biznesingizni raqamlashtirish va rivojlantirishga ko'maklashadi.",
       getStarted: "Murojaat Qoldirish",
       learnMore: "Xizmatlarimiz",
       stat1: "Muvaffaqiyatli Loyihalar",
@@ -50,6 +50,10 @@ export const translations = {
         {
           title: "IT Konsultatsiya va Qo'llab-quvvatlash",
           description: "Mavjud tizimlarni optimallashtirish, xavfsizlikni ta'minlash va uzluksiz texnik yordam ko'rsatish.",
+        },
+        {
+          title: "SMM Xizmatlari",
+          description: "SMM — brendingizni raqamli muhitda rivojlantirish, mijozlarni jalb qilish va savdoni oshirish uchun kompleks xizmat.",
         },
       ],
     },
@@ -152,8 +156,8 @@ export const translations = {
     hero: {
       badge: "Центр Цифровых Решений",
       title: "Развивайте Свой Бизнес С Современными",
-      titleHighlight: "Программами",
-      description: "ImkonSoft помогает автоматизировать ваш бизнес путем создания веб-сайтов, мобильных приложений и CRM-систем.",
+      titleHighlight: "Решениями",
+      description: "ImkonSoft помогает цифровизировать и развивать ваш бизнес с помощью веб-сайтов, мобильных приложений, CRM-систем и SMM-услуг.",
       getStarted: "Оставить Заявку",
       learnMore: "Наши Услуги",
       stat1: "Успешных Проектов",
@@ -188,6 +192,10 @@ export const translations = {
         {
           title: "IT-Консалтинг и Поддержка",
           description: "Оптимизация существующих систем, обеспечение безопасности и круглосуточная техническая поддержка.",
+        },
+        {
+          title: "SMM Услуги",
+          description: "SMM — комплексная услуга для развития вашего бренда в цифровой среде, привлечения клиентов и увеличения продаж.",
         },
       ],
     },

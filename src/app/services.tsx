@@ -8,6 +8,7 @@ import {
   CogIcon,
   LinkIcon,
   CloudIcon,
+  MegaphoneIcon,
 } from "@heroicons/react/24/solid";
 import { useLanguage } from "@/context/language-context";
 
@@ -21,6 +22,7 @@ export function Services() {
     CogIcon,
     LinkIcon,
     CloudIcon,
+    MegaphoneIcon,
   ];
 
   const SERVICES = t.services.items.map((item, idx) => ({
