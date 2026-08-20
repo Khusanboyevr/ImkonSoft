@@ -55,7 +55,7 @@ function Hero() {
       <div className="grid min-h-[85vh] px-8 relative z-10 py-12 md:py-0">
         <div className="container my-auto mx-auto grid place-items-center text-center">
           <Image
-            src="/image/logo.png?v=3"
+            src="/image/logo.png?v=4"
             alt="ImkonSoft logo"
             width={120}
             height={120}
