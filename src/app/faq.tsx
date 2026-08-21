@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Typography, Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
+import { SectionGlow } from "@/components";
 
 const FAQS = [
   {
@@ -31,15 +32,21 @@ export function Faq() {
   const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
 
   return (
-    <section className="py-8 px-8 lg:py-20">
-      <div className="container mx-auto">
+    <section className="relative py-8 px-8 lg:py-20 overflow-hidden imk-panel-fade">
+      <SectionGlow tone="cool" size={540} bottom="0" left="-160px" />
+      <div className="relative z-10 container mx-auto">
         <div className="text-center">
-          <Typography variant="h1" color="blue-gray" className="mb-4">
+          <Typography
+            variant="h1"
+            className="mb-4 font-display font-normal reveal-up"
+            style={{ color: "var(--imk-text-primary)" }}
+          >
             Ko&apos;p beriladigan savollar
           </Typography>
           <Typography
             variant="lead"
-            className="mx-auto mb-24 lg:w-3/5 !text-gray-500"
+            className="mx-auto mb-24 lg:w-3/5 reveal-up"
+            style={{ color: "var(--imk-text-secondary)", ["--imk-reveal-delay" as any]: "120ms" }}
           >
             ImkonSoft faoliyati, xizmat turlari va loyihalar haqida eng ko&apos;p so&apos;raladigan savollarga javoblar.
           </Typography>
@@ -51,15 +58,14 @@ export function Faq() {
               key={key}
               open={open === key + 1}
               onClick={() => handleOpen(key + 1)}
+              className="!border-b reveal-up"
+              style={{ borderColor: "var(--imk-border-card)", ["--imk-reveal-delay" as any]: `${key * 70}ms` }}
             >
-              <AccordionHeader className="text-left text-gray-900">
+              <AccordionHeader className="text-left !border-none" style={{ color: "var(--imk-text-primary)" }}>
                 {title}
               </AccordionHeader>
               <AccordionBody>
-                <Typography
-                  color="blue-gray"
-                  className="font-normal text-gray-500"
-                >
+                <Typography className="font-normal" style={{ color: "var(--imk-text-secondary)" }}>
                   {desc}
                 </Typography>
               </AccordionBody>

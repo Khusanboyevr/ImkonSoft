@@ -1,11 +1,20 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
-import { Layout, FixedPlugin } from "@/components";
+import { Fraunces, Inter } from "next/font/google";
+import { Layout, FixedPlugin, LogoIntro } from "@/components";
 
-const roboto = Roboto({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700", "900"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -13,6 +22,12 @@ export const metadata: Metadata = {
   title: "ImkonSoft - Zamonaviy IT Xizmatlari va Dasturiy Yechimlar",
   description:
     "ImkonSoft - Sizning biznesingiz uchun innovatsion va ishonchli dasturiy ta'minot yechimlari, IT-konsalting va raqamli transformatsiya xizmatlari.",
+  icons: {
+    icon: "/image/logo.png?v=5",
+  },
+  openGraph: {
+    images: ["/image/logo.png?v=5"],
+  },
 };
 
 export default function RootLayout({
@@ -28,9 +43,9 @@ export default function RootLayout({
           data-site="YOUR_DOMAIN_HERE"
           src="https://api.nepcha.com/js/nepcha-analytics.js"
         ></script>
-        <link rel="shortcut icon" href="/image/logo.jpg" type="image/jpeg" />
       </head>
-      <body className={roboto.className}>
+      <body className={`${fraunces.variable} ${inter.variable} font-body`}>
+        <LogoIntro />
         <Layout>
           {children}
           <FixedPlugin />

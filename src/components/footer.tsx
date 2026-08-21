@@ -1,5 +1,6 @@
-import { Typography, Button, IconButton } from "@material-tailwind/react";
+import { Typography, IconButton } from "@material-tailwind/react";
 import Image from "next/image";
+import { SectionGlow } from "@/components/section-glow";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -31,72 +32,43 @@ function LinkedInIcon({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="px-8 pb-5 pt-16 md:pt-20">
-      <div className="container flex flex-col mx-auto">
-        <div className="flex !w-full py-10 mb-5 md:mb-20 flex-col justify-center !items-center bg-gray-900 max-w-6xl mx-auto rounded-2xl p-5 ">
-          <Typography
-            className="text-2xl md:text-3xl text-center font-bold "
-            color="white"
-          >
-            Biz bilan loyihangizni boshlang!
-          </Typography>
-          <Typography
-            color="white"
-            className=" md:w-7/12 text-center my-3 !text-base"
-          >
-            G&apos;oyangizni haqiqatga aylantirish va bepul professional konsultatsiya olish uchun biz bilan bog'laning.
-          </Typography>
-          <div className="flex w-full md:w-fit gap-3 mt-2 flex-col md:flex-row">
-            <a href="#contact">
-              <Button
-                color="white"
-                size="lg"
-                className="btn-shimmer font-bold rounded-full px-8 py-3.5 shadow-xl transition-all duration-300 transform hover:scale-105 hover:bg-cyan-50"
-              >
-                Bog&apos;lanish
-              </Button>
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col md:flex-row items-center !justify-between">
+    <footer className="relative px-8 pb-5 pt-16 md:pt-20 overflow-hidden" style={{ background: "var(--imk-bg-base)" }}>
+      <SectionGlow tone="cool" size={480} top="-140px" right="10%" />
+      <div className="relative z-10 container flex flex-col mx-auto">
+        <div className="flex flex-col md:flex-row items-center !justify-between reveal-up">
           <div className="flex items-center gap-2">
             <Image
-              src="/image/logo.png?v=4"
+              src="/image/logo.png?v=5"
               alt="ImkonSoft logo"
               width={32}
               height={32}
               className="h-8 w-8 object-contain"
             />
-            <Typography
-              as="a"
-              href="#"
-              variant="h6"
-              className="text-gray-900"
-            >
-              ImkonSoft
-            </Typography>
+            <span className="font-display text-lg" style={{ color: "var(--imk-text-primary)" }}>
+              Imkon<span className="italic" style={{ color: "var(--imk-glow-highlight)" }}>Soft</span>
+            </span>
           </div>
           <div className="flex w-fit justify-center gap-2 mt-4 md:mt-0">
             <a href="https://t.me/imkonsoft" target="_blank" rel="noopener noreferrer">
-              <IconButton size="sm" color="gray" variant="text">
+              <IconButton size="sm" variant="text" className="imk-icon-btn" style={{ color: "var(--imk-text-secondary)" }}>
                 <TelegramIcon className="h-5 w-5" />
               </IconButton>
             </a>
             <a href="https://instagram.com/imkonsoft" target="_blank" rel="noopener noreferrer">
-              <IconButton size="sm" color="gray" variant="text">
+              <IconButton size="sm" variant="text" className="imk-icon-btn" style={{ color: "var(--imk-text-secondary)" }}>
                 <InstagramIcon className="h-5 w-5" />
               </IconButton>
             </a>
             <a href="https://linkedin.com/company/imkonsoft" target="_blank" rel="noopener noreferrer">
-              <IconButton size="sm" color="gray" variant="text">
+              <IconButton size="sm" variant="text" className="imk-icon-btn" style={{ color: "var(--imk-text-secondary)" }}>
                 <LinkedInIcon className="h-5 w-5" />
               </IconButton>
             </a>
           </div>
         </div>
         <Typography
-          color="blue-gray"
-          className="text-center mt-12 font-normal !text-gray-700"
+          className="text-center mt-12 font-normal"
+          style={{ color: "var(--imk-text-muted)" }}
         >
           &copy; {CURRENT_YEAR} ImkonSoft. Barcha huquqlar himoyalangan.
         </Typography>

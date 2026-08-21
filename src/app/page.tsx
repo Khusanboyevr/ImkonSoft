@@ -3,7 +3,6 @@ import { Navbar, Footer } from "@/components";
 
 // sections
 import Hero from "./hero";
-import OurClients from "./our-clients";
 import AboutEvent from "./about-event";
 import OurStats from "./our-stats";
 import Services from "./services";
@@ -15,7 +14,6 @@ export default function Portfolio() {
     <>
       <Navbar />
       <Hero />
-      <OurClients />
       <AboutEvent />
       <OurStats />
       <Services />

@@ -2,13 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import {
-  Navbar as MTNavbar,
-  Collapse,
-  Button,
-  IconButton,
-  Typography,
-} from "@material-tailwind/react";
+import { Collapse, IconButton } from "@material-tailwind/react";
 import {
   RectangleStackIcon,
   UserCircleIcon,
@@ -16,25 +10,33 @@ import {
   XMarkIcon,
   Bars3Icon,
   PhoneIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/solid";
 import { useLanguage } from "@/context/language-context";
 
 interface NavItemProps {
   children: React.ReactNode;
   href?: string;
+  onClick?: () => void;
 }
 
-function NavItem({ children, href }: NavItemProps) {
+function NavItem({ children, href, onClick }: NavItemProps) {
   return (
     <li>
-      <Typography
-        as="a"
+      <a
         href={href || "#"}
-        variant="paragraph"
-        className="flex items-center gap-2 font-medium cursor-pointer"
+        onClick={onClick}
+        className="group relative flex items-center gap-2 text-sm font-medium transition-colors"
+        style={{ color: "var(--imk-text-secondary)" }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--imk-text-primary)")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--imk-text-secondary)")}
       >
         {children}
-      </Typography>
+        <span
+          className="absolute left-0 -bottom-1 h-[1px] w-0 transition-all duration-300 group-hover:w-full"
+          style={{ background: "var(--imk-glow-highlight)" }}
+        />
+      </a>
     </li>
   );
 }
@@ -55,73 +57,45 @@ export function Navbar() {
 
   React.useEffect(() => {
     function handleScroll() {
-      if (window.scrollY > 0) {
-        setIsScrolling(true);
-      } else {
-        setIsScrolling(false);
-      }
+      setIsScrolling(window.scrollY > 8);
     }
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navMenu = [
-    {
-      name: t.nav.home,
-      icon: Squares2X2Icon,
-      href: "#hero",
-    },
-    {
-      name: t.nav.services,
-      icon: RectangleStackIcon,
-      href: "#services",
-    },
-    {
-      name: t.nav.about,
-      icon: UserCircleIcon,
-      href: "#about",
-    },
-    {
-      name: t.nav.contact,
-      icon: PhoneIcon,
-      href: "#contact",
-    },
+    { name: t.nav.home, icon: Squares2X2Icon, href: "#hero" },
+    { name: t.nav.services, icon: RectangleStackIcon, href: "#services" },
+    { name: t.nav.about, icon: UserCircleIcon, href: "#about" },
+    { name: t.nav.contact, icon: PhoneIcon, href: "#contact" },
   ];
 
   return (
-    <MTNavbar
-      shadow={false}
-      fullWidth
-      blurred={false}
-      color={isScrolling ? "white" : "transparent"}
-      className="fixed top-0 z-50 border-0 transition-colors duration-300"
+    <nav
+      className="fixed top-0 z-50 w-full transition-all duration-300"
+      style={{
+        background: isScrolling ? "rgba(10,10,10,0.85)" : "rgba(10,10,10,0.4)",
+        backdropFilter: "blur(12px)",
+        borderBottom: isScrolling ? "1px solid var(--imk-border-subtle)" : "1px solid transparent",
+      }}
     >
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between px-6 py-4">
         <a href="#hero" className="flex items-center gap-2">
           <Image
-            src="/image/logo.png?v=4"
+            src="/image/logo.png?v=5"
             alt="ImkonSoft logo"
             width={32}
             height={32}
             className="h-8 w-8 object-contain"
           />
-          <Typography
-            color={isScrolling ? "blue-gray" : "white"}
-            className="text-lg font-bold"
-          >
-            ImkonSoft
-          </Typography>
+          <span className="font-display text-lg" style={{ color: "var(--imk-text-primary)" }}>
+            Imkon<span className="italic" style={{ color: "var(--imk-glow-highlight)" }}>Soft</span>
+          </span>
         </a>
 
-        <ul
-          className={`ml-10 hidden items-center gap-6 lg:flex ${
-            isScrolling ? "text-gray-900" : "text-white"
-          }`}
-        >
-          {navMenu.map(({ name, icon: Icon, href }) => (
+        <ul className="ml-10 hidden items-center gap-8 lg:flex">
+          {navMenu.map(({ name, href }) => (
             <NavItem key={name} href={href}>
-              <Icon className="h-5 w-5" />
               <span>{name}</span>
             </NavItem>
           ))}
@@ -130,64 +104,66 @@ export function Navbar() {
         <div className="hidden items-center gap-4 lg:flex">
           {/* Language Switcher */}
           <div
-            className={`flex items-center p-1 rounded-full border transition-all ${
-              isScrolling
-                ? "bg-gray-100 border-gray-300"
-                : "bg-white/10 backdrop-blur-md border-white/20"
-            }`}
+            className="flex items-center p-1 rounded-full"
+            style={{ background: "var(--imk-btn-dark-bg)", border: "1px solid var(--imk-btn-dark-border)" }}
           >
             <button
               onClick={() => setLang("uz")}
-              className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                lang === "uz"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : isScrolling
-                  ? "text-gray-700 hover:text-gray-900"
-                  : "text-white/80 hover:text-white"
-              }`}
+              className="imk-lang-btn px-3 py-1 rounded-full text-xs font-bold"
+              style={{
+                background: lang === "uz" ? "var(--imk-cta-gradient)" : "transparent",
+                color: lang === "uz" ? "var(--imk-cta-text)" : "var(--imk-text-secondary)",
+              }}
             >
               🇺🇿 UZ
             </button>
             <button
               onClick={() => setLang("ru")}
-              className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                lang === "ru"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : isScrolling
-                  ? "text-gray-700 hover:text-gray-900"
-                  : "text-white/80 hover:text-white"
-              }`}
+              className="imk-lang-btn px-3 py-1 rounded-full text-xs font-bold"
+              style={{
+                background: lang === "ru" ? "var(--imk-cta-gradient)" : "transparent",
+                color: lang === "ru" ? "var(--imk-cta-text)" : "var(--imk-text-secondary)",
+              }}
             >
               🇷🇺 RU
             </button>
           </div>
 
-          <a href="#contact">
-            <Button
-              color={isScrolling ? "gray" : "white"}
-              className="btn-shimmer font-bold rounded-full px-6 transition-all duration-300 transform hover:scale-105 shadow-md"
-            >
-              {t.nav.contact}
-            </Button>
+          <a
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="imk-pill-dark px-5 py-2.5 text-sm font-semibold"
+          >
+            <span>{t.nav.contact}</span>
+            <ArrowRightIcon className="w-3.5 h-3.5" />
           </a>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
-          {/* Mobile Language Switcher */}
-          <div className="flex items-center p-0.5 rounded-full bg-white/10 border border-white/20">
+          <div
+            className="flex items-center p-0.5 rounded-full"
+            style={{ background: "var(--imk-btn-dark-bg)", border: "1px solid var(--imk-btn-dark-border)" }}
+          >
             <button
               onClick={() => setLang("uz")}
-              className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                lang === "uz" ? "bg-blue-600 text-white" : isScrolling ? "text-gray-800" : "text-white"
-              }`}
+              className="imk-lang-btn px-2 py-0.5 rounded-full text-[10px] font-bold"
+              style={{
+                background: lang === "uz" ? "var(--imk-cta-gradient)" : "transparent",
+                color: lang === "uz" ? "var(--imk-cta-text)" : "var(--imk-text-secondary)",
+              }}
             >
               UZ
             </button>
             <button
               onClick={() => setLang("ru")}
-              className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                lang === "ru" ? "bg-blue-600 text-white" : isScrolling ? "text-gray-800" : "text-white"
-              }`}
+              className="imk-lang-btn px-2 py-0.5 rounded-full text-[10px] font-bold"
+              style={{
+                background: lang === "ru" ? "var(--imk-cta-gradient)" : "transparent",
+                color: lang === "ru" ? "var(--imk-cta-text)" : "var(--imk-text-secondary)",
+              }}
             >
               RU
             </button>
@@ -195,8 +171,9 @@ export function Navbar() {
 
           <IconButton
             variant="text"
-            color={isScrolling ? "gray" : "white"}
             onClick={handleOpen}
+            className="transition-transform duration-300 active:scale-90"
+            style={{ color: "var(--imk-text-primary)", transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
           >
             {open ? (
               <XMarkIcon strokeWidth={2} className="h-6 w-6" />
@@ -208,10 +185,13 @@ export function Navbar() {
       </div>
 
       <Collapse open={open}>
-        <div className="container mx-auto mt-4 rounded-lg bg-white px-6 py-5 shadow-xl">
-          <ul className="flex flex-col gap-4 text-gray-900">
+        <div
+          className="container mx-auto mt-2 mb-4 rounded-2xl px-6 py-5"
+          style={{ background: "var(--imk-bg-card)", border: "1px solid var(--imk-border-card)" }}
+        >
+          <ul className="flex flex-col gap-4">
             {navMenu.map(({ name, icon: Icon, href }) => (
-              <NavItem key={name} href={href}>
+              <NavItem key={name} href={href} onClick={() => setOpen(false)}>
                 <Icon className="h-5 w-5" />
                 {name}
               </NavItem>
@@ -219,13 +199,17 @@ export function Navbar() {
           </ul>
 
           <div className="mt-6 flex flex-col gap-3">
-            <a href="#contact" className="w-full">
-              <Button color="gray" className="w-full">{t.nav.contact}</Button>
+            <a
+              href="#contact"
+              onClick={() => setOpen(false)}
+              className="imk-pill-dark w-full justify-center px-5 py-2.5 text-sm font-semibold"
+            >
+              {t.nav.contact}
             </a>
           </div>
         </div>
       </Collapse>
-    </MTNavbar>
+    </nav>
   );
 }
 

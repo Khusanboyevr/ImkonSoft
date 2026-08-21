@@ -9,14 +9,17 @@ interface StatsCardProps {
 
 export function StatsCard({ count, title, icon: Icon }: StatsCardProps) {
   return (
-    <Card color="transparent" shadow={false} className="flex flex-col items-start gap-2">
-      <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
-        <Icon className="w-5 h-5 text-orange-500" />
+    <Card color="transparent" shadow={false} className="flex flex-col items-start gap-1.5">
+      <div
+        className="w-9 h-9 rounded-lg flex items-center justify-center"
+        style={{ background: "rgba(232, 134, 90, 0.12)" }}
+      >
+        <Icon className="w-4 h-4" style={{ color: "var(--imk-glow-mid)" }} />
       </div>
-      <Typography variant="h1" className="font-bold" color="blue-gray">
+      <Typography className="font-display font-normal text-3xl" style={{ color: "var(--imk-text-primary)" }}>
         {count}
       </Typography>
-      <Typography variant="h6" color="blue-gray" className="mt-1 font-medium">
+      <Typography className="text-xs font-medium" style={{ color: "var(--imk-text-secondary)" }}>
         {title}
       </Typography>
     </Card>
