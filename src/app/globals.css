@@ -351,6 +351,10 @@ body::before {
 .imk-marquee-track--cards {
   animation-duration: 46s;
 }
+.imk-marquee-track--reverse {
+  animation-direction: reverse;
+  animation-duration: 38s;
+}
 
 /* ========== Services bento-grid ========== */
 .imk-bento-card {

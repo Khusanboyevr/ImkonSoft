@@ -3,17 +3,6 @@
 import { StarIcon, SparklesIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import { useLanguage } from "@/context/language-context";
 
-const TRUSTED_BY = [
-  "Najot Ta'lim",
-  "PDP Education",
-  "Mohirdev",
-  "Astrum IT",
-  "Click Uzbekistan",
-  "Payme",
-  "Humans.uz",
-  "UzCard",
-];
-
 function SquiggleArrow() {
   return (
     <svg
@@ -38,6 +27,11 @@ function SquiggleArrow() {
 
 function Hero() {
   const { t } = useLanguage();
+
+  const SERVICE_NAMES = [
+    ...t.services.categories.flatMap((c) => c.items.map((i) => i.title)),
+    ...t.services.extras.map((e) => e.title),
+  ];
 
   return (
     <section
@@ -109,16 +103,20 @@ function Hero() {
           {t.hero.trust}
         </p>
 
-        {/* Logo marquee strip */}
+        {/* Services marquee strip */}
         <div className="imk-marquee-wrap imk-marquee-mask w-full mt-8 overflow-hidden reveal" style={{ ["--imk-reveal-delay" as any]: "500ms" }}>
-          <div className="imk-marquee-track">
-            {[...TRUSTED_BY, ...TRUSTED_BY].map((name, idx) => (
-              <span
-                key={idx}
-                className="px-6 text-sm font-medium whitespace-nowrap grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
-                style={{ color: "var(--imk-text-secondary)" }}
-              >
-                {name}
+          <div className="imk-marquee-track imk-marquee-track--reverse">
+            {[...SERVICE_NAMES, ...SERVICE_NAMES].map((name, idx) => (
+              <span key={idx} className="flex items-center whitespace-nowrap">
+                <span
+                  className="px-4 text-xs font-semibold uppercase tracking-wide opacity-45 hover:opacity-100 transition-all duration-300"
+                  style={{ color: "var(--imk-text-secondary)" }}
+                >
+                  {name}
+                </span>
+                <span aria-hidden="true" style={{ color: "var(--imk-glow-highlight)", opacity: 0.45 }}>
+                  •
+                </span>
               </span>
             ))}
           </div>
