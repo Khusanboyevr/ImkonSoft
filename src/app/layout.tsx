@@ -23,10 +23,10 @@ export const metadata: Metadata = {
   description:
     "ImkonSoft - Sizning biznesingiz uchun innovatsion va ishonchli dasturiy ta'minot yechimlari, IT-konsalting va raqamli transformatsiya xizmatlari.",
   icons: {
-    icon: "/image/logo.png?v=5",
+    icon: "/image/logo.png?v=6",
   },
   openGraph: {
-    images: ["/image/logo.png?v=5"],
+    images: ["/image/logo.png?v=6"],
   },
 };
 

@@ -82,7 +82,7 @@ export function Navbar() {
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
         <a href="#hero" className="flex items-center gap-2">
           <Image
-            src="/image/logo.png?v=5"
+            src="/image/logo.png?v=6"
             alt="ImkonSoft logo"
             width={32}
             height={32}

@@ -38,7 +38,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center !justify-between reveal-up">
           <div className="flex items-center gap-2">
             <Image
-              src="/image/logo.png?v=5"
+              src="/image/logo.png?v=6"
               alt="ImkonSoft logo"
               width={32}
               height={32}

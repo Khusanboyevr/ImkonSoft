@@ -22,7 +22,7 @@ export function LogoIntro() {
       <div className="ii-stage">
         <div className="ii-markwrap">
           <div className="ii-ring" />
-          <img className="ii-mark" alt="" src="/image/logo.png?v=5" />
+          <img className="ii-mark" alt="" src="/image/logo.png?v=6" />
           <div className="ii-sweep" />
         </div>
         <div className="ii-word" aria-hidden="true">
