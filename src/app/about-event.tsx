@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { Typography } from "@material-tailwind/react";
 import AboutCard from "@/components/about-card";
 import {
   CpuChipIcon,
   UserGroupIcon,
   ShieldCheckIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/solid";
 import { useLanguage } from "@/context/language-context";
 import { SectionGlow } from "@/components";
@@ -63,6 +65,14 @@ export function AboutEvent() {
             </div>
           ))}
         </div>
+
+        <Link
+          href="/jamoa"
+          className="imk-pill-dark mt-10 px-6 py-3 text-sm font-semibold reveal-up"
+        >
+          <span>{t.about.teamLink}</span>
+          <ArrowRightIcon className="h-3.5 w-3.5" />
+        </Link>
       </div>
     </section>
   );

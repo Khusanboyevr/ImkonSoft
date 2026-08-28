@@ -369,8 +369,11 @@ body::before {
 .imk-bento-card:hover {
   transform: translateY(-4px);
 }
-.imk-bento-card--large {
+.imk-bento-card--lead {
   border-radius: 26px;
+}
+.imk-bento-card--lead .imk-bento-visual {
+  min-height: 140px;
 }
 .imk-bento-card--dark {
   background: linear-gradient(155deg, #161412 0%, #131313 60%, #14151b 100%);
@@ -882,4 +885,27 @@ textarea:focus-visible {
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+}
+
+/* ========== Team cards (Jamoa page) ========== */
+.imk-team-card {
+  border-radius: 22px;
+}
+.imk-team-card__veil {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0) 55%,
+    rgba(15, 14, 13, 0.55) 82%,
+    #151417 100%
+  );
+}
+
+/* Page header spacing for standalone (non-landing) routes */
+.imk-subpage {
+  padding-top: 7rem;
+}
+@media (min-width: 1024px) {
+  .imk-subpage {
+    padding-top: 8.5rem;
+  }
 }
