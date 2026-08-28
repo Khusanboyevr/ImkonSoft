@@ -2,6 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Collapse, IconButton } from "@material-tailwind/react";
 import {
   RectangleStackIcon,
@@ -21,22 +23,31 @@ interface NavItemProps {
 }
 
 function NavItem({ children, href, onClick }: NavItemProps) {
+  const target = href || "#";
+  // Hash-only links stay plain anchors so the browser handles smooth scrolling.
+  const isRoute = target.startsWith("/");
+  const Tag: any = isRoute ? Link : "a";
+
   return (
     <li>
-      <a
-        href={href || "#"}
+      <Tag
+        href={target}
         onClick={onClick}
         className="group relative flex items-center gap-2 text-sm font-medium transition-colors"
         style={{ color: "var(--imk-text-secondary)" }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--imk-text-primary)")}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--imk-text-secondary)")}
+        onMouseEnter={(e: React.MouseEvent<HTMLElement>) =>
+          (e.currentTarget.style.color = "var(--imk-text-primary)")
+        }
+        onMouseLeave={(e: React.MouseEvent<HTMLElement>) =>
+          (e.currentTarget.style.color = "var(--imk-text-secondary)")
+        }
       >
         {children}
         <span
           className="absolute left-0 -bottom-1 h-[1px] w-0 transition-all duration-300 group-hover:w-full"
           style={{ background: "var(--imk-glow-highlight)" }}
         />
-      </a>
+      </Tag>
     </li>
   );
 }
@@ -45,6 +56,10 @@ export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [isScrolling, setIsScrolling] = React.useState(false);
   const { lang, setLang, t } = useLanguage();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  // Off the landing page the in-page anchors need the route prefix to resolve.
+  const section = (id: string) => (isHome ? `#${id}` : `/#${id}`);
 
   const handleOpen = () => setOpen((cur) => !cur);
 
@@ -64,10 +79,10 @@ export function Navbar() {
   }, []);
 
   const navMenu = [
-    { name: t.nav.home, icon: Squares2X2Icon, href: "#hero" },
-    { name: t.nav.services, icon: RectangleStackIcon, href: "#services" },
-    { name: t.nav.about, icon: UserCircleIcon, href: "#about" },
-    { name: t.nav.contact, icon: PhoneIcon, href: "#contact" },
+    { name: t.nav.home, icon: Squares2X2Icon, href: section("hero") },
+    { name: t.nav.services, icon: RectangleStackIcon, href: section("services") },
+    { name: t.nav.about, icon: UserCircleIcon, href: "/jamoa" },
+    { name: t.nav.contact, icon: PhoneIcon, href: section("contact") },
   ];
 
   return (
@@ -80,7 +95,7 @@ export function Navbar() {
       }}
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
-        <a href="#hero" className="flex items-center gap-2">
+        <Link href={section("hero")} className="flex items-center gap-2">
           <Image
             src="/image/logo.png?v=6"
             alt="ImkonSoft logo"
@@ -91,7 +106,7 @@ export function Navbar() {
           <span className="font-display text-lg" style={{ color: "var(--imk-text-primary)" }}>
             Imkon<span className="italic" style={{ color: "var(--imk-glow-highlight)" }}>Soft</span>
           </span>
-        </a>
+        </Link>
 
         <ul className="ml-10 hidden items-center gap-8 lg:flex">
           {navMenu.map(({ name, href }) => (
@@ -130,8 +145,9 @@ export function Navbar() {
           </div>
 
           <a
-            href="#contact"
+            href={section("contact")}
             onClick={(e) => {
+              if (!isHome) return;
               e.preventDefault();
               document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
             }}
@@ -200,7 +216,7 @@ export function Navbar() {
 
           <div className="mt-6 flex flex-col gap-3">
             <a
-              href="#contact"
+              href={section("contact")}
               onClick={() => setOpen(false)}
               className="imk-pill-dark w-full justify-center px-5 py-2.5 text-sm font-semibold"
             >

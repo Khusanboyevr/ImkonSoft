@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export function useScrollReveal() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const revealElements = document.querySelectorAll(
       ".reveal, .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-scale, .reveal-rotate"
@@ -25,5 +28,6 @@ export function useScrollReveal() {
     revealElements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+    // Re-scan after client-side route changes, which swap in fresh nodes.
+  }, [pathname]);
 }

@@ -9,3 +9,4 @@ export * from "./event-content-card";
 export * from "./fixed-plugin";
 export * from "./section-glow";
 export * from "./logo-intro";
+export * from "./team-card";
