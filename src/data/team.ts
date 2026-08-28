@@ -123,15 +123,6 @@ export const TEAM: TeamMember[] = [
     output: { uz: "5+ loyiha", ru: "5+ проектов" },
   },
   {
-    slug: "shukurulloh",
-    name: "Shukurulloh",
-    department: "tech",
-    image: card("shukurulloh.png"),
-    role: { uz: "Kiber Xavfsizlik Mutaxassisi", ru: "Специалист по кибербезопасности" },
-    experience: { uz: "2+ yillik tajriba", ru: "2+ года опыта" },
-    output: { uz: "5+ loyiha", ru: "5+ проектов" },
-  },
-  {
     slug: "akbarshox",
     name: "Akbarshox",
     department: "media",
