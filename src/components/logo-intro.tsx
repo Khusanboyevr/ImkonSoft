@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-const WORD = "IMKONSOFT";
-const ACCENT_START = 5; // "SOFT" is styled in the accent color
+const WORD = "REVEN GROUP";
+const ACCENT_START = 6; // "GROUP" is styled in the accent color
 
 export function LogoIntro() {
   const [visible, setVisible] = useState(false);
@@ -22,15 +22,24 @@ export function LogoIntro() {
       <div className="ii-stage">
         <div className="ii-markwrap">
           <div className="ii-ring" />
-          <img className="ii-mark" alt="" src="/image/logo.png?v=6" />
+          <img className="ii-mark" alt="" src="/image/logo.svg" />
           <div className="ii-sweep" />
         </div>
         <div className="ii-word" aria-hidden="true">
-          {WORD.split("").map((letter, idx) => (
-            <span key={idx} className={`ii-letter ${idx >= ACCENT_START ? "ii-accent" : ""}`}>
-              {letter}
-            </span>
-          ))}
+          <div className="ii-part">
+            {"REVEN".split("").map((letter, idx) => (
+              <span key={idx} className="ii-letter" style={{ animationDelay: `${1.6 + idx * 0.06}s` }}>
+                {letter}
+              </span>
+            ))}
+          </div>
+          <div className="ii-part ii-accent">
+            {"GROUP".split("").map((letter, idx) => (
+              <span key={idx} className="ii-letter ii-accent" style={{ animationDelay: `${1.96 + idx * 0.06}s` }}>
+                {letter}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { SectionGlow } from "@/components";
 
 const FAQS = [
   {
-    title: "1. ImkonSoft qanday xizmatlarni taklif qiladi?",
+    title: "1. Reven Group qanday xizmatlarni taklif qiladi?",
     desc: "Biz veb-saytlar va portallar yaratish, mobil ilovalar (iOS va Android) ishlab chiqish, biznes jarayonlarini avtomatlashtirish uchun CRM va ERP tizimlarini yaratish kabi professional IT-xizmatlarni taklif etamiz.",
   },
   {
@@ -48,7 +48,7 @@ export function Faq() {
             className="mx-auto mb-24 lg:w-3/5 reveal-up"
             style={{ color: "var(--imk-text-secondary)", ["--imk-reveal-delay" as any]: "120ms" }}
           >
-            ImkonSoft faoliyati, xizmat turlari va loyihalar haqida eng ko&apos;p so&apos;raladigan savollarga javoblar.
+            Reven Group faoliyati, xizmat turlari va loyihalar haqida eng ko&apos;p so&apos;raladigan savollarga javoblar.
           </Typography>
         </div>
 

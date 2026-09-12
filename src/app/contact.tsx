@@ -100,7 +100,7 @@ export function Contact() {
                   </div>
                   <div>
                     <Typography variant="small" className="mb-0.5" style={{ color: "var(--imk-text-muted)" }}>Email</Typography>
-                    <Typography className="font-semibold" style={{ color: "var(--imk-text-primary)" }}>info@imkonsoft.uz</Typography>
+                    <Typography className="font-semibold" style={{ color: "var(--imk-text-primary)" }}>info@revengroup.uz</Typography>
                   </div>
                 </div>
 

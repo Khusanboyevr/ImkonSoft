@@ -97,14 +97,14 @@ export function Navbar() {
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
         <Link href={section("hero")} className="flex items-center gap-2">
           <Image
-            src="/image/logo.png?v=6"
-            alt="ImkonSoft logo"
+            src="/image/logo.svg"
+            alt="Reven Group logo"
             width={32}
             height={32}
-            className="h-8 w-8 object-contain"
+            className="h-8 w-8 object-contain rounded-full shadow-sm"
           />
-          <span className="font-display text-lg" style={{ color: "var(--imk-text-primary)" }}>
-            Imkon<span className="italic" style={{ color: "var(--imk-glow-highlight)" }}>Soft</span>
+          <span className="font-display text-lg tracking-wide" style={{ color: "var(--imk-text-primary)" }}>
+            Reven <span className="italic" style={{ color: "var(--imk-glow-highlight)" }}>Group</span>
           </span>
         </Link>
 

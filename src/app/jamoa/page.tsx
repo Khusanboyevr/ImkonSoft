@@ -4,9 +4,9 @@ import { Navbar, Footer } from "@/components";
 import TeamSection from "./team-section";
 
 export const metadata: Metadata = {
-  title: "Jamoa — ImkonSoft",
+  title: "Jamoa — Reven Group",
   description:
-    "ImkonSoft jamoasi: dasturchilar, dizaynerlar va kiberxavfsizlik mutaxassislari bilan tanishing.",
+    "Reven Group jamoasi: dasturchilar, dizaynerlar va kiberxavfsizlik mutaxassislari bilan tanishing.",
 };
 
 export default function JamoaPage() {
