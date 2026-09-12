@@ -19,14 +19,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ImkonSoft - Zamonaviy IT Xizmatlari va Dasturiy Yechimlar",
+  title: "Reven Group - Zamonaviy IT Xizmatlari va Dasturiy Yechimlar",
   description:
-    "ImkonSoft - Sizning biznesingiz uchun innovatsion va ishonchli dasturiy ta'minot yechimlari, IT-konsalting va raqamli transformatsiya xizmatlari.",
+    "Reven Group - Sizning biznesingiz uchun innovatsion va ishonchli dasturiy ta'minot yechimlari, IT-konsalting va raqamli transformatsiya xizmatlari.",
   icons: {
-    icon: "/image/logo.png?v=6",
+    icon: "/image/logo.svg",
   },
   openGraph: {
-    images: ["/image/logo.png?v=6"],
+    images: ["/image/logo.svg"],
   },
 };
 

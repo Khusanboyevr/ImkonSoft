@@ -38,28 +38,28 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center !justify-between reveal-up">
           <div className="flex items-center gap-2">
             <Image
-              src="/image/logo.png?v=6"
-              alt="ImkonSoft logo"
+              src="/image/logo.svg"
+              alt="Reven Group logo"
               width={32}
               height={32}
-              className="h-8 w-8 object-contain"
+              className="h-8 w-8 object-contain rounded-full shadow-sm"
             />
-            <span className="font-display text-lg" style={{ color: "var(--imk-text-primary)" }}>
-              Imkon<span className="italic" style={{ color: "var(--imk-glow-highlight)" }}>Soft</span>
+            <span className="font-display text-lg tracking-wide" style={{ color: "var(--imk-text-primary)" }}>
+              Reven <span className="italic" style={{ color: "var(--imk-glow-highlight)" }}>Group</span>
             </span>
           </div>
           <div className="flex w-fit justify-center gap-2 mt-4 md:mt-0">
-            <a href="https://t.me/imkonsoft" target="_blank" rel="noopener noreferrer">
+            <a href="https://t.me/revengroup" target="_blank" rel="noopener noreferrer">
               <IconButton size="sm" variant="text" className="imk-icon-btn" style={{ color: "var(--imk-text-secondary)" }}>
                 <TelegramIcon className="h-5 w-5" />
               </IconButton>
             </a>
-            <a href="https://instagram.com/imkonsoft" target="_blank" rel="noopener noreferrer">
+            <a href="https://instagram.com/revengroup" target="_blank" rel="noopener noreferrer">
               <IconButton size="sm" variant="text" className="imk-icon-btn" style={{ color: "var(--imk-text-secondary)" }}>
                 <InstagramIcon className="h-5 w-5" />
               </IconButton>
             </a>
-            <a href="https://linkedin.com/company/imkonsoft" target="_blank" rel="noopener noreferrer">
+            <a href="https://linkedin.com/company/revengroup" target="_blank" rel="noopener noreferrer">
               <IconButton size="sm" variant="text" className="imk-icon-btn" style={{ color: "var(--imk-text-secondary)" }}>
                 <LinkedInIcon className="h-5 w-5" />
               </IconButton>
@@ -70,7 +70,7 @@ export function Footer() {
           className="text-center mt-12 font-normal"
           style={{ color: "var(--imk-text-muted)" }}
         >
-          &copy; {CURRENT_YEAR} ImkonSoft. Barcha huquqlar himoyalangan.
+          &copy; {CURRENT_YEAR} Reven Group. Barcha huquqlar himoyalangan.
         </Typography>
       </div>
     </footer>

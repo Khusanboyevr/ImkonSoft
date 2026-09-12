@@ -15,7 +15,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Language>("uz");
 
   useEffect(() => {
-    const saved = localStorage.getItem("imkonsoft_lang") as Language;
+    const saved = (localStorage.getItem("revengroup_lang") || localStorage.getItem("imkonsoft_lang")) as Language;
     if (saved && (saved === "uz" || saved === "ru")) {
       setLangState(saved);
     }
@@ -23,7 +23,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const setLang = (newLang: Language) => {
     setLangState(newLang);
-    localStorage.setItem("imkonsoft_lang", newLang);
+    localStorage.setItem("revengroup_lang", newLang);
   };
 
   const t = translations[lang] || translations.uz;

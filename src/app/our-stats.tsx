@@ -46,7 +46,7 @@ export function OurStats() {
             className="font-display font-normal text-3xl leading-tight lg:w-3/4"
             style={{ color: "var(--imk-text-primary)" }}
           >
-            Raqamlarda ImkonSoft
+            Raqamlarda Reven Group
           </Typography>
           <Typography
             variant="lead"
