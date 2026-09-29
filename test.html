@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reven Mechanics Test</title>
+<style>
+  :root { color-scheme: dark; --bg: #0b0e0f; --fg: #e8e6e0; --mute: #8b918f; --ok: #6fbf8a; --bad: #e0736a; --line: #22292a; }
+  body { margin: 0; padding: 24px; background: var(--bg); color: var(--fg); font: 14px/1.5 ui-monospace, Menlo, Consolas, monospace; }
+  h1 { font-size: 16px; margin: 0 0 4px; }
+  p { margin: 0 0 16px; color: var(--mute); }
+  .wrap { display: grid; grid-template-columns: 480px 1fr; gap: 24px; align-items: start; }
+  #stage iframe { width: 480px; height: 270px; border: 1px solid var(--line); background: #000; }
+  table { border-collapse: collapse; width: 100%; }
+  td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td:first-child { width: 48px; font-weight: 600; }
+  .pass td:first-child { color: var(--ok); }
+  .fail td:first-child { color: var(--bad); }
+  .note { color: var(--mute); }
+  #sum { margin: 12px 0; font-weight: 600; }
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } #stage iframe { width: 100%; height: auto; aspect-ratio: 16/9; } }
+</style>
+</head>
+<body>
+<h1>Showroom mechanics test</h1>
+<p>Runs every scenario against index.html in an iframe with default browser settings (no autoplay flags). Transitions run at 4x speed unless noted.</p>
+<div class="wrap">
+  <div id="stage"></div>
+  <div><div id="sum">Running…</div><table id="out"></table></div>
+</div>
+<script>
+(function () {
+  'use strict';
+  const out = document.getElementById('out');
+  const sum = document.getElementById('sum');
+  const stage = document.getElementById('stage');
+  const results = [];
+  window.__RESULTS = { done: false, items: results };
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  function report(name, ok, note) {
+    results.push({ name, ok: !!ok, note: note || '' });
+    const tr = document.createElement('tr');
+    tr.className = ok ? 'pass' : 'fail';
+    tr.innerHTML = '<td>' + (ok ? 'PASS' : 'FAIL') + '</td><td>' + name + (note ? '<div class="note">' + note + '</div>' : '') + '</td>';
+    out.appendChild(tr);
+  }
+
+  function load(params) {
+    return new Promise(res => {
+      const f = document.createElement('iframe');
+      f.src = 'index.html?' + params;
+      f.onload = () => {
+        const w = f.contentWindow, d = f.contentDocument;
+        const log = { start: [], end: [], blocked: [] };
+        d.addEventListener('transitionstart', e => { if (e.detail) log.start.push(Object.assign({ at: performance.now() }, e.detail)); });
+        d.addEventListener('transitionend', e => { if (e.detail) log.end.push(Object.assign({ at: performance.now() }, e.detail)); });
+        d.addEventListener('sceneblocked', e => log.blocked.push(e.detail));
+        res({ f, w, d, log });
+      };
+      stage.replaceChildren(f);
+    });
+  }
+  const ds = x => x.d.documentElement.dataset;
+  async function until(pred, ms) {
+    const t0 = performance.now();
+    while (performance.now() - t0 < (ms || 20000)) { if (pred()) return true; await sleep(20); }
+    return false;
+  }
+  const idleAt = (x, n, ms) => until(() => ds(x).state === 'idle' && ds(x).scene === String(n), ms);
+  const wheel = (x, dy) => x.w.dispatchEvent(new x.w.WheelEvent('wheel', { deltaY: dy, bubbles: true, cancelable: true }));
+  const key = (x, k) => x.w.dispatchEvent(new x.w.KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }));
+  function touch(x, type, y) {
+    const e = new x.w.Event(type, { bubbles: true, cancelable: true });
+    const list = [{ clientX: 200, clientY: y }];
+    Object.defineProperty(e, 'touches', { value: type === 'touchend' ? [] : list });
+    Object.defineProperty(e, 'changedTouches', { value: list });
+    x.w.dispatchEvent(e);
+  }
+  async function swipe(x, dy) { touch(x, 'touchstart', 500); touch(x, 'touchmove', 500 - dy / 2); touch(x, 'touchend', 500 - dy); }
+  const counter = x => { const n = x.d.querySelector('.counter-num .cn.is-cur'); return n ? n.textContent : ''; };
+  const rect = (x, sel) => { const r = x.d.querySelector(sel).getBoundingClientRect(); return [r.left, r.top, r.width, r.height].map(v => v.toFixed(2)).join(','); };
+  const block = (x, id) => x.d.querySelector('[data-block="' + id + '"]');
+  const blockVisible = (x, id) => { const b = block(x, id); if (!b || b.hidden) return false; const r = b.querySelector('.rv'); return parseFloat(x.w.getComputedStyle(r).opacity) > 0.95; };
+  const front = x => x.d.querySelector('video.is-front');
+  const atEnd = x => { const v = front(x); return v && Math.abs(v.currentTime - v.duration) < 0.05; };
+
+  async function main() {
+    // ---------- Intro, blocks, shared chrome ----------
+    let x = await load('rate=4');
+    await until(() => ds(x).ready === 'true', 15000);
+    const menu0 = rect(x, '.menu'), counter0 = rect(x, '.counter');
+    await sleep(1600);
+    report('Opening screen: logo scene with the hero block, nothing plays on its own', x.log.start.length === 0 && ds(x).scene === '0' && blockVisible(x, 'b0'));
+    wheel(x, 100);
+    const started = await until(() => x.log.start.length > 0, 2000);
+    report('First scroll starts video 1', started && x.log.start[0].from === 0 && x.log.start[0].to === 1);
+    await sleep(300);
+    report('Hero block leaves; block 1 stays hidden while the video plays', ds(x).state === 'transition' && block(x, 'b1').hidden && (block(x, 'b0').hidden || block(x, 'b0').classList.contains('is-out')));
+    const menuMid = rect(x, '.menu');
+    await idleAt(x, 1);
+    report('Intro ends on scene 1 and stops there', ds(x).scene === '1' && ds(x).direction === 'forward');
+    report('Rest state is the last frame of the video', atEnd(x), 'currentTime = ' + (front(x) && front(x).currentTime.toFixed(3)));
+    await sleep(1400);
+    report('Block 1 appears after the video finished', blockVisible(x, 'b1'));
+    report('Counter shows 01', counter(x) === '01', 'shown: ' + counter(x));
+    report('Menu and counter did not move by a pixel', menu0 === menuMid && menu0 === rect(x, '.menu') && counter0 === rect(x, '.counter'));
+    report('<html> carries data-scene / data-state / data-direction', ds(x).scene === '1' && ds(x).state === 'idle' && ds(x).direction === 'forward');
+
+    // ---------- Wheel forward ----------
+    await sleep(300);
+    wheel(x, 100);
+    await sleep(100);
+    report('Block 1 leaves when the next transition starts', block(x, 'b1').classList.contains('is-out') || block(x, 'b1').hidden);
+    await idleAt(x, 2);
+    await sleep(1200);
+    report('Wheel: one notch = one transition (1 → 2)', ds(x).scene === '2' && x.log.start.length === 2);
+    report('Counter shows 02, block 2 visible', counter(x) === '02' && blockVisible(x, 'b2'));
+
+    // ---------- Trackpad inertia ----------
+    let n0 = x.log.start.length;
+    const t0 = performance.now();
+    for (let i = 0; performance.now() - t0 < 3200; i++) { wheel(x, Math.max(1, 120 * Math.exp(-i / 60))); await sleep(16); }
+    await idleAt(x, 3);
+    await sleep(600);
+    report('Inertia stream longer than a transition = one step, not three', x.log.start.length - n0 === 1 && ds(x).scene === '3', 'steps: ' + (x.log.start.length - n0));
+
+    // ---------- Last scene: release into the ordinary page ----------
+    n0 = x.log.start.length;
+    await sleep(300);
+    const t1 = performance.now();
+    for (let i = 0; performance.now() - t1 < 900; i++) { wheel(x, Math.max(1, 90 * Math.exp(-i / 20))); await sleep(16); }
+    await until(() => x.w.scrollY > 0, 2000);
+    await sleep(1500);
+    const contentTop = x.d.getElementById('content').offsetTop;
+    report('Last scene: scrolling on releases the page (data-mode="free")', ds(x).mode === 'free' && x.log.start.length === n0 && ds(x).scene === '3');
+    report('…and it scrolls down to the information sections', Math.abs(x.w.scrollY - contentTop) < 4, 'scrollY ' + Math.round(x.w.scrollY) + ' / content at ' + contentTop);
+    const passed = x.w.dispatchEvent(new x.w.WheelEvent('wheel', { deltaY: 100, bubbles: true, cancelable: true }));
+    report('In the ordinary page the wheel is left to the browser', passed);
+    report('Menu and counter still not moved; counter hidden while scrolled', menu0 === rect(x, '.menu') && ds(x).scrolled === 'true');
+
+    // An upward stream that started below the top must not re-enter the cinema.
+    x.w.scrollTo(0, 400); await sleep(400);
+    for (let i = 0; i < 20; i++) { if (i === 6) x.w.scrollTo(0, 0); wheel(x, -60); await sleep(16); }
+    await sleep(400);
+    report('Upward scroll that reaches the top does not re-enter the scenes by itself', ds(x).mode === 'free' && ds(x).scene === '3');
+
+    // A new upward gesture at the very top re-enters and plays backward.
+    n0 = x.log.start.length;
+    wheel(x, -100);
+    await until(() => ds(x).state === 'transition', 1000);
+    report('New upward gesture at the top re-enters the cinema and goes back', ds(x).mode === 'cinema' && ds(x).direction === 'backward');
+    await idleAt(x, 2);
+    report('One step only (3 → 2)', x.log.start.length - n0 === 1 && ds(x).scene === '2', 'steps: ' + (x.log.start.length - n0));
+    key(x, 'ArrowDown'); await idleAt(x, 3);
+    key(x, 'PageDown'); await until(() => ds(x).mode === 'free', 1000); await sleep(1400);
+    report('PageDown on the last scene also releases the page', ds(x).mode === 'free' && x.w.scrollY > 0);
+    x.w.scrollTo(0, 0); await sleep(300);
+    key(x, 'ArrowUp'); await until(() => ds(x).state === 'transition', 1000);
+    report('ArrowUp at the top re-enters the cinema', ds(x).mode === 'cinema');
+    await idleAt(x, 2);
+    key(x, 'ArrowDown'); await idleAt(x, 3);
+    report('Counter shows 03', counter(x) === '03');
+
+    // ---------- Keyboard backward, reverse files ----------
+    key(x, 'ArrowUp');
+    await until(() => ds(x).state === 'transition', 1000);
+    report('Backward sets data-direction="backward"', ds(x).direction === 'backward');
+    await idleAt(x, 2);
+    const lastEnd = x.log.end[x.log.end.length - 1];
+    report('ArrowUp plays the reversed file natively (3 → 2)', lastEnd.result.mode === 'native' && atEnd(x), 'mode: ' + lastEnd.result.mode);
+    key(x, 'PageUp'); await idleAt(x, 1);
+    key(x, 'PageDown'); await idleAt(x, 2);
+    report('PageUp / PageDown step one scene', ds(x).scene === '2');
+
+    // ---------- Scroll during a transition ----------
+    n0 = x.log.start.length;
+    key(x, 'ArrowUp');
+    for (let i = 0; i < 4; i++) { await sleep(260); wheel(x, -100); }
+    await idleAt(x, 1);
+    await sleep(900);
+    report('Scroll during a transition is ignored and not queued', x.log.start.length - n0 === 1 && ds(x).scene === '1', 'steps: ' + (x.log.start.length - n0));
+
+    // ---------- Swipes ----------
+    await sleep(250);
+    swipe(x, 160); await idleAt(x, 2);
+    report('Swipe up moves forward', ds(x).scene === '2');
+    swipe(x, -160); await idleAt(x, 1);
+    report('Swipe down moves backward', ds(x).scene === '1');
+    swipe(x, 12); await sleep(300);
+    report('Short swipe is ignored', ds(x).scene === '1' && ds(x).state === 'idle');
+
+    // ---------- First scene lock ----------
+    key(x, 'ArrowUp'); await idleAt(x, 0);
+    n0 = x.log.start.length;
+    key(x, 'ArrowUp'); await sleep(300); wheel(x, -100); await sleep(300);
+    report('First scene: backward movement is blocked', x.log.start.length === n0 && ds(x).scene === '0');
+    report('Back at scene 0 the frame is the end of the reversed video 1 (= its first frame)', (() => { const v = front(x); return v && /t1_rev/.test(v.currentSrc) && atEnd(x); })());
+
+    // ---------- Menu link to a section: goes straight there, no waiting for videos ----------
+    key(x, 'ArrowDown'); await idleAt(x, 1);
+    n0 = x.log.start.length;
+    x.d.querySelector('.nav a[data-goto="#xizmatlar"]').click();
+    await until(() => ds(x).mode === 'free', 3000); await sleep(1600);
+    const svcTop = x.d.getElementById('xizmatlar').getBoundingClientRect().top;
+    report('Menu "Xizmatlar" jumps straight to the services, no video steps', x.log.start.length === n0 && svcTop > -4 && svcTop < 120, 'services at ' + Math.round(svcTop) + ' px');
+    x.w.scrollTo(0, 0); await sleep(400);
+    wheel(x, 100);
+    await until(() => ds(x).state === 'transition', 1000);
+    report('Back at the top, scrolling down continues the scenes from where they were (1 → 2)', ds(x).mode === 'cinema' && x.log.start.length - n0 === 1 && x.log.start[x.log.start.length - 1].to === 2);
+    await idleAt(x, 2);
+    n0 = x.log.start.length;
+    x.d.querySelector('.menu .logo').click();
+    await idleAt(x, 0, 20000);
+    report('Logo walks back through every scene to the opening screen (2 → 1 → 0)', ds(x).scene === '0' && x.log.start.length - n0 === 2);
+
+    // ---------- Swipe back into the cinema ----------
+    key(x, 'ArrowDown'); await idleAt(x, 1); key(x, 'ArrowDown'); await idleAt(x, 2); key(x, 'ArrowDown'); await idleAt(x, 3);
+    swipe(x, 160); await until(() => ds(x).mode === 'free', 1000); await sleep(1400);
+    report('Swipe up on the last scene releases the page', ds(x).mode === 'free');
+    x.w.scrollTo(0, 0); await sleep(200);
+    swipe(x, -160); await idleAt(x, 2);
+    report('Swipe down at the top re-enters and goes back', ds(x).mode === 'cinema' && ds(x).scene === '2');
+
+    // ---------- No reverse file: scrub fallback ----------
+    x = await load('rate=4&nointro&norev');
+    await idleAt(x, 0);
+    key(x, 'ArrowDown'); await idleAt(x, 1);
+    key(x, 'ArrowUp');
+    await idleAt(x, 0);
+    let e = x.log.end[x.log.end.length - 1], s = x.log.start[x.log.start.length - 1];
+    const took = (e.at - s.at) / 1000;
+    report('Without a reverse file, backward scrubs currentTime (not a jump)', e.result.mode === 'scrub-reverse' && took > 1.2 && front(x).currentTime < 0.05, 'mode: ' + e.result.mode + ', took ' + took.toFixed(2) + ' s');
+
+    // ---------- play() rejected: manual scrub instead of a jump ----------
+    x = await load('rate=4&nointro&noplay');
+    await idleAt(x, 0);
+    key(x, 'ArrowDown'); await idleAt(x, 1);
+    e = x.log.end[0]; s = x.log.start[0];
+    const took2 = (e.at - s.at) / 1000;
+    report('If play() is refused, the transition is scrubbed with rAF', e.result.mode === 'scrub-noplay' && took2 > 1.2 && atEnd(x), 'took ' + took2.toFixed(2) + ' s');
+    await sleep(1400);
+    report('…and the block still appears afterwards', blockVisible(x, 'b1'));
+
+    // ---------- Missing file: navigation does not hang ----------
+    x = await load('rate=4&nointro&badsrc&lt=1500');
+    await idleAt(x, 0);
+    key(x, 'ArrowDown'); await idleAt(x, 1);
+    s = performance.now();
+    key(x, 'ArrowDown');
+    const ok = await idleAt(x, 2, 6000);
+    report('Unavailable video: wait is time-limited, navigation continues', ok, 'recovered in ' + ((performance.now() - s) / 1000).toFixed(2) + ' s');
+
+    // ---------- Tab hidden mid-transition ----------
+    x = await load('nointro');
+    await idleAt(x, 0);
+    key(x, 'ArrowDown');
+    await sleep(900);
+    Object.defineProperty(x.d, 'hidden', { configurable: true, get: () => true });
+    x.d.dispatchEvent(new x.w.Event('visibilitychange'));
+    const fin = await idleAt(x, 1, 3000);
+    e = x.log.end[0];
+    report('Tab hidden mid-video: frame is still driven to the final position', fin && e.result.forced && atEnd(x), 'forced: ' + (e && e.result.forced));
+
+    // ---------- Real speed ----------
+    x = await load('');
+    await until(() => ds(x).ready === 'true', 15000);
+    key(x, 'ArrowDown');
+    await idleAt(x, 1, 20000);
+    e = x.log.end[0]; s = x.log.start[0];
+    report('Video 1 at the configured speed (playbackRate 1.5)', e.result.mode === 'native', 'took ' + ((e.at - s.at) / 1000).toFixed(2) + ' s for an 8 s clip');
+
+    const failed = results.filter(r => !r.ok).length;
+    sum.textContent = (results.length - failed) + ' / ' + results.length + ' passed';
+    window.__RESULTS.done = true;
+  }
+  main().catch(err => { report('Test runner crashed', false, String(err && err.stack || err)); window.__RESULTS.done = true; sum.textContent = 'Runner crashed'; });
+})();
+</script>
+</body>
+</html>
