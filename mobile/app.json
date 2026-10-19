@@ -29,6 +29,17 @@
       "expo-splash-screen"
     ],
     "scheme": "revengroup",
-    "backgroundColor": "#071922"
+    "backgroundColor": "#071922",
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "3af69cb0-eb0b-4938-8fbf-6067a9931d01"
+      }
+    },
+    "owner": "reven.uz"
   }
 }

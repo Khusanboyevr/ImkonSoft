@@ -56,16 +56,39 @@ APK or IPA can be read straight back out.
 
 Point it somewhere else with `EXPO_PUBLIC_API_BASE_URL`; see `.env.example`.
 
-## Building for the stores
+## Getting it onto phones
+
+Expo Go (above) only works while a computer on the same network is serving the
+project. For a real, installable app, build it with EAS. Bundle IDs are already
+set in `app.json` (`uz.revengroup.app`), and the profiles below live in
+`eas.json`.
 
 ```bash
 npm install -g eas-cli
-eas login
-eas build:configure
-eas build --platform android --profile preview   # installable APK
-eas build --platform all --profile production    # store builds
+eas login            # a free Expo account
+eas build --platform android --profile preview
 ```
 
-Bundle IDs are already set in `app.json`: `uz.revengroup.app` on both platforms.
-An iOS build needs an Apple Developer account; Android does not until you
-publish to Play.
+That returns a download link for an **APK** — send it to anyone, they install it
+directly, no store involved. Android warns about installing outside Play; the
+user allows it once.
+
+For the stores:
+
+```bash
+eas build --platform android --profile production   # .aab for Google Play
+eas build --platform ios --profile production       # .ipa for App Store
+```
+
+| Target | What you need | Cost |
+| --- | --- | --- |
+| APK, shared directly | Expo account | free |
+| Google Play | Google Play Developer account | $25 once |
+| App Store / TestFlight | Apple Developer Program | $99/year |
+
+iOS has no equivalent of the shared APK — outside the App Store, the only route
+is TestFlight, which still needs the Apple account.
+
+Updating later: JS-only changes can ship over the air with `eas update`, without
+a new build or store review. Anything that touches native code or `app.json`
+needs a fresh build.
